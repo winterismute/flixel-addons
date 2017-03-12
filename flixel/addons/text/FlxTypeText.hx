@@ -133,6 +133,8 @@ class FlxTypeText extends FlxText
 	 */
 	private var _sound:FlxSound;
 	
+	public var resetTypeSoundWhenPlaying:Bool;
+	
 	/**
 	 * Create a FlxTypeText object, which is very similar to FlxText except that the text is initially hidden and can be
 	 * animated one character at a time by calling start().
@@ -420,12 +422,15 @@ class FlxTypeText extends FlxText
 				
 				if (sounds != null && !useDefaultSound)
 				{
-					for (sound in sounds)
+					if (resetTypeSoundWhenPlaying)
 					{
-						sound.stop();
+						for (sound in sounds)
+						{
+							sound.stop();
+						}
 					}
 					
-					FlxG.random.getObject(sounds).play(true);
+					FlxG.random.getObject(sounds).play(resetTypeSoundWhenPlaying);
 				}
 				else if (useDefaultSound)
 				{
@@ -466,6 +471,17 @@ class FlxTypeText extends FlxText
 			// If we're done typing, call the onComplete() function
 			if (_length >= _finalText.length && _typing && !_waiting && !_erasing)
 			{
+				if (useDefaultSound)
+				{
+					
+				}
+				else if (sounds != null)
+				{
+					for (sound in sounds)
+					{
+						sound.stop();
+					}
+				}
 				onComplete();
 			}
 			
