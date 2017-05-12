@@ -7,8 +7,6 @@ import flixel.system.FlxAssets;
 import flixel.text.FlxText;
 import flixel.system.FlxSound;
 import flixel.math.FlxRandom;
-
-#if !bitfive
 import flash.media.Sound;
 
 #if !flash
@@ -18,7 +16,6 @@ class TypeSound extends Sound { }
 // Flash uses a WAV instead of MP3 because the sound is so short that MP3's encoding mutes most of it
 @:sound("assets/sounds/type.wav")
 class TypeSound extends Sound { }
-#end
 #end
 
 /**
@@ -69,7 +66,7 @@ class FlxTypeText extends FlxText
 	 */
 	public var sounds:Array<FlxSound>;
 	/**
-	 * Whether or not to use the default typing sound. Not available for openfl-bitfive.
+	 * Whether or not to use the default typing sound.
 	 */
 	public var useDefaultSound:Bool = false;
 	/**
@@ -188,19 +185,14 @@ class FlxTypeText extends FlxText
 			skipKeys = SkipKeys;
 		}
 		
-		if (Callback != null)
-		{
-			completeCallback = Callback;
-		}
+		completeCallback = Callback;
 
 		insertBreakLines();
 		
-		#if !bitfive
 		if (useDefaultSound)
 		{
 			loadDefaultSound();
 		}
-		#end
 	}
 	
 	/**
@@ -271,17 +263,12 @@ class FlxTypeText extends FlxText
 			skipKeys = SkipKeys;
 		}
 		
-		if (Callback != null)
-		{
-			eraseCallback = Callback;
-		}
+		eraseCallback = Callback;
 		
-		#if !bitfive
 		if (useDefaultSound)
 		{
 			loadDefaultSound();
 		}
-		#end
 	}
 	
 	/**
@@ -434,9 +421,7 @@ class FlxTypeText extends FlxText
 				}
 				else if (useDefaultSound)
 				{
-					#if !bitfive
 					_sound.play(true);
-					#end
 				}
 			}
 		}
@@ -512,7 +497,6 @@ class FlxTypeText extends FlxText
 		}
 	}
 	
-	#if !bitfive
 	private function loadDefaultSound():Void
 	{
 		#if FLX_SOUND_SYSTEM
@@ -522,5 +506,4 @@ class FlxTypeText extends FlxText
 		_sound.loadEmbedded(new TypeSound());
 		#end
 	}
-	#end
 }
